@@ -1,0 +1,47 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		},
+		{
+			"path":"pages/shop/shop"
+		},
+		{
+			"path":"pages/timer/timer"
+		}
+		
+		
+	],
+	"tabBar":{
+		"list":[
+			{
+				"text":"专注",
+				"pagePath":"pages/timer/timer",
+				"iconPath":"static/tabbar/timer_cur.png",
+				"selectedIconPath":"static/tabbar/timer.png"
+			},
+			{
+				"text":"兑换",
+				"pagePath":"pages/shop/shop",
+				"iconPath":"static/tabbar/shop_cur.png",
+				"selectedIconPath":"static/tabbar/shop.png"
+			},
+			{
+				"text":"我的",
+				"pagePath":"pages/index/index",
+				"iconPath":"static/tabbar/home_cur.png",
+				"selectedIconPath":"static/tabbar/home.png"
+			}
+		]
+		
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}
