@@ -10,7 +10,10 @@
 			"path":"pages/shop/shop"
 		},
 		{
-			"path":"pages/timer/timer"
+			"path":"pages/timer/list"
+		},
+		{
+			"path":"pages/timer/clock"
 		}
 		
 		
@@ -19,7 +22,7 @@
 		"list":[
 			{
 				"text":"专注",
-				"pagePath":"pages/timer/timer",
+				"pagePath":"pages/timer/list",
 				"iconPath":"static/tabbar/timer_cur.png",
 				"selectedIconPath":"static/tabbar/timer.png"
 			},
