@@ -1,5 +1,6 @@
 <template>
 	<view class="content">
+		<coin></coin>
 		<!-- 头部模块 -->
 		<view class="todo-header" v-if="list.length !== 0">
 			<view class="todo-header-left">
@@ -13,6 +14,7 @@
 			</view>
 		</view>
 		<!-- 列表模块 -->
+		
 		<view class="todo-blank" v-if="list.length === 0">
 			<view class="todo-blank-img">
 				<image src="../../static/default.png" mode="aspectFit"></image>
@@ -51,6 +53,7 @@
 </template>
 
 <script>
+	import coin from "../../components/mycoin.vue"
 	export default {
 		data() {
 			return {
@@ -200,6 +203,9 @@
 					return newList
 				}
 			}
+		},
+		components:{
+			coin
 		}
 	}
 </script>
