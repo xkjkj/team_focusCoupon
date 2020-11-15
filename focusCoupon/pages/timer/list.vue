@@ -9,7 +9,7 @@
 			</view>
 			<view class="todo-header-right">
 				<view class="todo-header-right-item" :class="{'active-tab': tabActive===0}" @click='tab(0)'>全部</view>
-				<view class="todo-header-right-item" :class="{'active-tab': tabActive===1}" @click='tab(1)'>代办</view>
+				<view class="todo-header-right-item" :class="{'active-tab': tabActive===1}" @click='tab(1)'>待办</view>
 				<view class="todo-header-right-item" :class="{'active-tab': tabActive===2}" @click='tab(2)'>已完成</view>
 			</view>
 		</view>
@@ -31,8 +31,10 @@
 				</view>
 				<view class="todo-item-content">
 					{{item.content}}
+					任务用时:{{item.hour}}:{{item.minute}}:{{item.second}}
 				</view>
 			</view>
+			
 		</view>
 		<!-- 新建按钮模块 -->
 		<view class="add-btn" @click="showInput">
@@ -64,7 +66,8 @@
 				statusTxt: '全部',
 				inputShow: false,
 				opid:0,
-				ifcomp:0
+				ifcomp:0,
+				total_second : 0,
 			}
 		},
 		onLoad() {
@@ -82,13 +85,19 @@
 			if(res.data.ifcom==1)
 			{
 				console.log(res.data.ifcom);
-				tthis.ifcomp=1;
-				console.log(tthis.ifcomp) ;
-				console.log(tthis.list)
+				tthis.total_second = res.data.total_second;
+				
+				//tthis.ifcomp=1;
+				
 				tthis.opid=res.data.value;
-				console.log(tthis.opid) ;
-				tthis.toggleFinish(tthis.opid)
-				tthis.ifcomp=0;
+				
+				tthis.toggleFinish(tthis.opid);
+				tthis.toggleAddTime(tthis.opid,res.data.total_second);
+				//tthis.ifcomp=0;
+			}
+			else
+			{
+				tthis.toggleAddTime(res.data.value,res.data.total_second);
 			}
 			
 			
@@ -101,13 +110,18 @@
 			},
 			
 			})
-			
-			
-				
-			
-			
+			//this.list[0].hour = this.showNum(parseInt(this.total_second / 60 / 60));
+			//this.list[0].minute = this.showNum(parseInt(this.total_second / 60) % 60);
+			//this.list[0].second = this.showNum(this.total_second % 60);	
+			//this.total_second = 0;
 		},
 		methods: {
+			showNum(num) {
+				if (num < 10) {
+					return '0' + num
+				}
+				return num
+			},
 			showInput() {
 				if(this.createActive) {
 					this.closeInput()
@@ -142,7 +156,11 @@
 				this.list.unshift({
 					id: 'id' + new Date().getTime(),
 					content: this.inputVal,
-					checked: false
+					checked: false,
+					tsecond: 0,
+					hour: this.showNum(parseInt(0 / 60 / 60)),
+					minute: this.showNum(parseInt(0 / 60) % 60),
+					second: this.showNum(0 % 60)
 				})
 				this.inputVal = ''
 				this.closeInput()
@@ -150,7 +168,18 @@
 			toggleFinish(id) {
 				let index = this.list.findIndex((item)=>item.id == id)
 				this.list[index].checked = !this.list[index].checked;
+				
+				
 			},
+			toggleAddTime(id,addtime) {
+				let index = this.list.findIndex((item)=>item.id == id)
+				this.list[index].tsecond = this.list[index].tsecond+addtime;
+				this.$store.state.totaltime=this.$store.state.totaltime+addtime;
+				this.list[index].hour = this.showNum(parseInt(this.list[index].tsecond / 60 / 60));
+				this.list[index].minute = this.showNum(parseInt(this.list[index].tsecond/ 60) % 60);
+				this.list[index].second = this.showNum(this.list[index].tsecond % 60);	
+				
+			},//新建函数
 			tab: function(t) {
 				this.tabActive = t;
 			},
@@ -160,7 +189,7 @@
 				uni.navigateTo({
 					url:"clock"
 				})
-				let data = {value:idd ,ifcom:0}
+				let data = {value:idd ,ifcom:0,total_second:this.total_second}
 				
 				uni.setStorage({
 				
@@ -185,7 +214,7 @@
 					return list
 				}
 				if(this.tabActive === 1) {
-					this.statusTxt = '代办';
+					this.statusTxt = '待办';
 					list.forEach((item)=>{
 						if(!item.checked) {
 							newList.push(item) 

@@ -68,9 +68,13 @@
 			handleCancel() {
 				this.isShowModal = false
 				
-				uni.navigateTo({
-					url:"../../pages/shop/shop"
-				})
+				//uni.navigateTo({
+					//url:"../../pages/shop/shop"
+				//})
+				
+				//uni.navigateBack({
+					//delta:1;
+				//})
 				
 				this.$emit('onClickCancel', 'cancel')
 				
@@ -79,7 +83,7 @@
 			},
 			handleConfirm() {
 				this.isShowModal = false
-				
+				this.$store.state.coin = this.$store.state.coin + 50;
 				this.$emit('onClickConfirm', 'confirm')
 				
 			}

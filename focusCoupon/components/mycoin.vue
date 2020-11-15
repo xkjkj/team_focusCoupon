@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view>我的金币：{{coin}}</view>
+		<view>我的金币：{{this.$store.state.coin}}</view>
 	</view>
 </template>
 
@@ -8,8 +8,12 @@
 	export default {
 		data() {
 			return {
-				coin:0
+				
 			};
+		},
+		
+		methods: {
+			
 		}
 	}
 </script>

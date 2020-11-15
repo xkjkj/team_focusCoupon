@@ -3,15 +3,19 @@
 		<view class="coupon-money">
 			<view class="nick" v-if="!types">{{item.seller_name}}使用</view>
 			<view class="layof" :style="{color:theme}">￥{{item.money}}</view>
-			<view>兑换需要{{item.cost}}金币</view>
+			
 			<view v-if="!types">
 				<view class="tit">券号：{{item.ticket}}</view>
 				<view class="demand">{{item.title}}</view>
 			</view>
+		</view>	
+		<view>
+			<text class="cuIcon-more"></text>
 		</view>
-		
-		<view class="get-btn" v-if="types" :style="{color:color, borderColor:color, background:solid}">选择使用</view>
-		<navigator class="get-btn" @click="changeCoin" v-if="!types" :style="{color:color, borderColor:color, background:solid}" :url='item.url'>立即兑换</navigator>
+			<view>
+				<text class="cuIcon-right"></text>
+			</view>
+			<text class="cu-bar">拥有个数：{{item.num}}</text>
     </view>
 </template>
 
@@ -47,13 +51,11 @@ export default {
 		},
 	},
 	methods: {
-		changeCoin(){
-			let tthis=this;
-			tthis.item.state++;
-			tthis.$emit('changeCoin',tthis.item.cost);
-			
+		changeCoin:function()
+		{
+			this.$store.state.coin = this.$store.state.coin-50;
+			//this.item.state++;
 		}
-
 	}
 }
 </script>

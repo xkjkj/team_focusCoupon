@@ -2,7 +2,7 @@
 	<view class="coupon_box">
 		<coin></coin>
 		
-		<coupon v-for="(item, index) in coupon[0].list" :key="index" v-bind:item="item" theme="#ff0000"></coupon>
+		<coupon v-for="(item, index) in coupon[0].list" :key="index" v-bind:item="item" theme="#ff0000" @changeCoin='changeCoin'></coupon>
 		
 		
 	</view>
@@ -19,27 +19,46 @@
 					list: [{
 						url: "",
 						money: "150",
-						cost:"50",
+						cost:50,
 						title: "满2000减150元",
 						ticket: "YMC_5c929fbf47235",
 						seller_name: "百达翡丽官方旗舰店",
 						end_time: "2019-04-20 01:51:20",
-						state: "1"
+						state: 0
 					},
 					{
 						url: "",
 						money: "50",
-						cost:"50",
+						cost:500,
 						title: "满1000减50元",
 						ticket: "YMC_5c929fbf47235",
 						seller_name: "百达翡丽官方旗舰店",
 						end_time: "2019-04-20 01:51:20",
-						state: "1"
+						state: 0
 					}]
 				}]
 			}
 		},
+		onLoad : function(){
+			let tthis=this;
+			tthis.coupon[0].list[0].state=tthis.$store.state.ticket1;
+			tthis.coupon[0].list[1].state=tthis.$store.state.ticket2;
+		},
+		onShow : function(){
+			let tthis=this;
+			tthis.coupon[0].list[0].state=tthis.$store.state.ticket1;
+			tthis.coupon[0].list[1].state=tthis.$store.state.ticket2;
+		},
 		methods:{
+			changeCoin(t){
+				let tthis=this;
+				tthis.$store.state.coin = tthis.$store.state.coin-t;
+				tthis.$store.state.ticket1=tthis.coupon[0].list[0].state;
+				tthis.$store.state.ticket2=tthis.coupon[0].list[1].state;
+				//this.$store.state.coin = this.$store.state.coin + 50;
+				
+				console.log(this.$store.state.coin);
+			}
 			
 		},
 		components:{

@@ -23,10 +23,11 @@
 			}
 		},
 		methods:{
-			end(){
+			end(e){
 				this.is_show = false;
 				clearInterval(this.timer);
 				this.$emit('clockend',this.totalCount);
+				console.log('结束了',e);
 			},
 			showNum(num) {
 				if (num < 10) {
